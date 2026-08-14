@@ -1,8 +1,9 @@
 public enum ItemType 
 {
-    Equip = 0,
-    Tools = 1,
-    Materials = 2,
+    Empty = 0,
+    Equip = 1,
+    Tools = 2,
+    Materials = 3,
 }
 
 public enum EquipIDs
@@ -11,6 +12,7 @@ public enum EquipIDs
     Shield = 1,
     Helmet = 2,
     Armor = 3,
+    Extras = 4,
 }
 
 public enum ToolIDs

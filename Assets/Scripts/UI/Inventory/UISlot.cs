@@ -8,31 +8,34 @@ public class UISlot : MonoBehaviour
     [SerializeField] private Image itemIcon;
     [SerializeField] private Image select;
 
-    private Sprite curItem;
+    private ItemData curItem;
     private UIInventory uIInventory;
     private bool isSelected = false;
     private bool isEmpty = true;
+    private Vector2Int slotPos;
 
     public bool IsEmpty => isEmpty;
     public bool IsSelected => isSelected;
+    public ItemData CurItem => curItem;
 
-    public void Init(UIInventory uIInventory)
+    public void Init(UIInventory uIInventory, int x, int y)
     {
         this.uIInventory = uIInventory;
+        slotPos = new Vector2Int(x, y);
     }
-    private void AddItem(Sprite itemSprite)
+    public void AddItem(ItemData data)
     {
-        itemIcon.sprite = itemSprite;
+        itemIcon.sprite = data.Icon;
 
         Color color = itemIcon.color;
         color.a = 1f;
         itemIcon.color = color;
 
-        curItem = itemSprite;
+        curItem = data;
         isEmpty = false;
     }
 
-    private void RemoveItem()
+    public void RemoveItem()
     {
         itemIcon.sprite = null;
 
@@ -48,6 +51,7 @@ public class UISlot : MonoBehaviour
 
     public void SelectItem()
     {
+        Debug.LogWarning("SelectItem called on slot at position: " + slotPos);
         isSelected = !isSelected;
         
         if (select != null)
@@ -55,12 +59,13 @@ public class UISlot : MonoBehaviour
             Color color = select.color;
             if (isSelected)
             {
-                uIInventory.SlotSelected(this);
                 color.a = 0.45f;
+                uIInventory.SlotSelected(this);
             }
             else
             {
                 color.a = 0f;
+                uIInventory.SlotDeselected();
             }
             select.color = color;
         }
@@ -68,6 +73,7 @@ public class UISlot : MonoBehaviour
 
     public void Deselect()
     {
+        Debug.LogWarning("Deselect called on slot at position: " + slotPos);
         isSelected = false;
         if (select != null)
         {
