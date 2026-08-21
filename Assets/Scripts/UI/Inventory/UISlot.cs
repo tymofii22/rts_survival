@@ -60,14 +60,15 @@ public class UISlot : MonoBehaviour
             if (isSelected)
             {
                 color.a = 0.45f;
+                select.color = color;
                 uIInventory.SlotSelected(this);
             }
             else
             {
                 color.a = 0f;
+                select.color = color;
                 uIInventory.SlotDeselected();
             }
-            select.color = color;
         }
     }
 

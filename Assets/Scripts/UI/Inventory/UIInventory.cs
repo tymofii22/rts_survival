@@ -15,13 +15,14 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private int craftSlotSize = 3;
 
     private List<UISlot> slots = new List<UISlot>();
+    private List<UISlot> craftSlots = new List<UISlot>();
     private UISlot lastSelected;
     
 
     private void Start()
     {
         CreateSlots(invSlotCount);
-        CreateSlots(craftSlotSize, craftSlotSize);
+        CreateCraftSlots(craftSlotSize, craftSlotSize);
         toggleInvAction.Enable();
         toggleInvAction.performed += ToggleInventory;
         gameObject.SetActive(false);
@@ -33,40 +34,54 @@ public class UIInventory : MonoBehaviour
 
     public void SlotSelected(UISlot selectedSlot)
     {
-        if (lastSelected != null && lastSelected.IsSelected)
+        if (slots.Contains(selectedSlot))
         {
-            if (lastSelected.CurItem != null)
+            if (lastSelected != null && lastSelected.IsSelected)
             {
-                if (selectedSlot.CurItem != null)
+                if (lastSelected.CurItem != null)
                 {
-                    SwapItems(lastSelected, selectedSlot);
+                    if (selectedSlot.CurItem != null)
+                    {
+                        SwapItems(lastSelected, selectedSlot);
+                    }
+                    else
+                    {
+                        MoveItem(lastSelected, selectedSlot);
+                    }
+                    lastSelected.Deselect();
+                    selectedSlot.Deselect();
+                    SlotDeselected();
+
                 }
                 else
                 {
-                    MoveItem(lastSelected, selectedSlot);
+                    Debug.Log("Selected Item: Empty Slot");
                 }
-                lastSelected.Deselect();
-                selectedSlot.Deselect(); 
-                SlotDeselected();
-
             }
             else
             {
-                Debug.Log("Selected Item: Empty Slot");
+                lastSelected = selectedSlot;
+            }
+
+            foreach (UISlot slot in slots)
+            {
+                if (slot != selectedSlot && slot.IsSelected)
+                {
+                    slot.Deselect();
+                }
             }
         }
-
-        lastSelected = selectedSlot;
-
-        foreach (UISlot slot in slots)
+        else
         {
-            if (slot != selectedSlot && slot.IsSelected)
+            if (lastSelected != null && lastSelected.IsSelected)
             {
-                slot.Deselect();
+                if (lastSelected.CurItem != null)
+                {
+                    MoveToCraftItem();
+                }
             }
         }
     }
-
     public void SlotDeselected()
     {
         lastSelected = null;
@@ -83,7 +98,7 @@ public class UIInventory : MonoBehaviour
         }
     }
 
-    private void CreateSlots(int x, int y)
+    private void CreateCraftSlots(int x, int y)
     {
         for (int i = 0; i < y; i++)
         {
@@ -91,7 +106,7 @@ public class UIInventory : MonoBehaviour
             {
                 UISlot slot = Instantiate(slotPrefab, craftParent);
                 //slot.SetItemData(itemData);
-                slots.Add(slot);
+                craftSlots.Add(slot);
                 slot.Init(this, j, i);
             }
                 
@@ -135,5 +150,12 @@ public class UIInventory : MonoBehaviour
         toSlot.AddItem(fromSlot.CurItem);
         fromSlot.RemoveItem();
     }
+
+    private void MoveToCraftItem()
+    {
+        throw new NotImplementedException();
+    }
+
+
 }
 
