@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class PickUpItem : MonoBehaviour
 {
-    [SerializeField] private EquipIDs equipID;
-    [SerializeField] private ToolIDs toolIDs;
-    [SerializeField] private MaterialIDs materialIDs;
+    private ItemID itemID;
 
+    public void Init(ItemID itemID)
+    {
+        this.itemID = itemID;
+    }
 
     private void OnCollisionEnter(Collision collision)
     {

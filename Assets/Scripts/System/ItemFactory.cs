@@ -22,5 +22,6 @@ public class ItemFactory : MonoBehaviour
     {
         PickUpItem prefab = Resources.Load<PickUpItem>("Prefabs/Items/" + id.ToString());
         PickUpItem item = Instantiate(prefab, pos, Quaternion.identity);
+        item.Init(id);
     }
 }
