@@ -7,12 +7,15 @@ public class UISlot : MonoBehaviour
 {
     [SerializeField] private Image itemIcon;
     [SerializeField] private Image select;
-
+    [SerializeField] private Button button;
+ 
     private ItemData curItem;
     private UIInventory uIInventory;
     private bool isSelected = false;
     private bool isEmpty = true;
     private Vector2Int slotPos;
+    private float doubleClickTime;
+    private UISlot fromSlot;
 
     public bool IsEmpty => isEmpty;
     public bool IsSelected => isSelected;
@@ -52,6 +55,17 @@ public class UISlot : MonoBehaviour
     public void SelectItem()
     {
         Debug.LogWarning("SelectItem called on slot at position: " + slotPos);
+        if (uIInventory.IsInCraft(this))
+        {
+            if (Time.time - doubleClickTime < 0.2f && !isEmpty)
+            {
+                RemoveItem();
+                fromSlot.SwitchLock(true);
+                Deselect();
+                return;
+            }
+            doubleClickTime = Time.time;
+        }
         isSelected = !isSelected;
         
         if (select != null)
@@ -83,4 +97,10 @@ public class UISlot : MonoBehaviour
             select.color = color;
         }
     }
+
+    public void Subscribe(UISlot fromSlot) =>
+        this.fromSlot = fromSlot;
+
+    public void SwitchLock(bool state) =>
+        button.interactable = state;
 }

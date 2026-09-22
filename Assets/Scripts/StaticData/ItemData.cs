@@ -10,11 +10,14 @@ public class ItemData
     public string ItemName;
     public ItemType Type;
     public Sprite Icon;
+    public ItemID id;
+    
+}
 
-    [HideIf("Type", ItemType.Equip)]
-    public EquipIDs EquipID;
-    [HideIf("Type", ItemType.Tools)]
-    public ToolIDs ToolID;
-    [HideIf("Type", ItemType.Materials)]
-    public MaterialIDs MaterialID;
+public enum ItemID
+{
+    None = 0,
+    Backpack = 1,
+    Rope = 2
+
 }
