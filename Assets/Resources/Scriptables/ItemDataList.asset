@@ -16,12 +16,20 @@ MonoBehaviour:
   - ItemName: BackPack
     Type: 1
     Icon: {fileID: 21300000, guid: 1ded522037a905540af32f7e8934d81d, type: 3}
-    id: 0
+    id: 1
   - ItemName: Rope
     Type: 3
     Icon: {fileID: 21300000, guid: b1887beaa9b87d8498588121a348b1c7, type: 3}
-    id: 0
-  - ItemName: 
-    Type: 0
-    Icon: {fileID: 0}
-    id: 0
+    id: 2
+  - ItemName: Wood
+    Type: 3
+    Icon: {fileID: 21300000, guid: 57900fc1009f40d4bb1a1209e8d53b98, type: 3}
+    id: 3
+  - ItemName: Stone
+    Type: 3
+    Icon: {fileID: 21300000, guid: a17fec9ca03676e4384a25cfc2d263ea, type: 3}
+    id: 4
+  - ItemName: Tape
+    Type: 3
+    Icon: {fileID: 21300000, guid: 55a8b8edd53bbbf4187a88ef0c04433e, type: 3}
+    id: 5

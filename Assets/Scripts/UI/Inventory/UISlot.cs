@@ -7,7 +7,8 @@ public class UISlot : MonoBehaviour
 {
     [SerializeField] private Image itemIcon;
     [SerializeField] private Image select;
-    [SerializeField] private Button button;
+    [SerializeField] private Button buttonSelf;
+    [SerializeField] private Button buttonDrop;
  
     private ItemData curItem;
     private UIInventory uIInventory;
@@ -15,16 +16,18 @@ public class UISlot : MonoBehaviour
     private bool isEmpty = true;
     private Vector2Int slotPos;
     private float doubleClickTime;
-    private UISlot fromSlot;
+    private UISlot invSlot;
 
     public bool IsEmpty => isEmpty;
     public bool IsSelected => isSelected;
     public ItemData CurItem => curItem;
+    public UISlot InvSlot => invSlot;
 
     public void Init(UIInventory uIInventory, int x, int y)
     {
         this.uIInventory = uIInventory;
         slotPos = new Vector2Int(x, y);
+        buttonDrop.onClick.AddListener(DropItem);
     }
     public void AddItem(ItemData data)
     {
@@ -36,6 +39,7 @@ public class UISlot : MonoBehaviour
 
         curItem = data;
         isEmpty = false;
+        buttonDrop.gameObject.SetActive(true);
     }
 
     public void RemoveItem()
@@ -50,6 +54,20 @@ public class UISlot : MonoBehaviour
         isEmpty = true;
 
         isSelected = false;
+        buttonDrop.gameObject.SetActive(false);
+    }
+
+    public void DropItem()
+    {
+        if (uIInventory.IsInCraft(this))
+        {
+            RemoveFromCraft();
+        }
+        else
+        {
+            uIInventory.DropItem(curItem.id);
+            RemoveItem();
+        }
     }
 
     public void SelectItem()
@@ -59,9 +77,7 @@ public class UISlot : MonoBehaviour
         {
             if (Time.time - doubleClickTime < 0.2f && !isEmpty)
             {
-                RemoveItem();
-                fromSlot.SwitchLock(true);
-                Deselect();
+                RemoveFromCraft();
                 return;
             }
             doubleClickTime = Time.time;
@@ -86,6 +102,13 @@ public class UISlot : MonoBehaviour
         }
     }
 
+    private void RemoveFromCraft()
+    {
+        RemoveItem();
+        invSlot.SwitchLock(true);
+        Deselect();
+    }
+
     public void Deselect()
     {
         Debug.LogWarning("Deselect called on slot at position: " + slotPos);
@@ -99,8 +122,11 @@ public class UISlot : MonoBehaviour
     }
 
     public void Subscribe(UISlot fromSlot) =>
-        this.fromSlot = fromSlot;
+        invSlot = fromSlot;
 
     public void SwitchLock(bool state) =>
-        button.interactable = state;
+        buttonSelf.interactable = state;
+
+    private void OnDestroy() =>
+        buttonDrop.onClick.RemoveAllListeners();
 }

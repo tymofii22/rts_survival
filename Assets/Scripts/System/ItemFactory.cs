@@ -9,6 +9,7 @@ public class ItemFactory : MonoBehaviour
     [SerializeField] private UIInventory inventory;
     [SerializeField] private ItemDataList dataList;
     [SerializeField] private List<SpawnableID> startSpawnables = new List<SpawnableID>();
+    [SerializeField] private Transform player;
 
     private void Start()
     {
@@ -22,6 +23,10 @@ public class ItemFactory : MonoBehaviour
     {
         PickUpItem prefab = Resources.Load<PickUpItem>("Prefabs/Items/" + id.ToString());
         PickUpItem item = Instantiate(prefab, pos, Quaternion.identity);
-        item.Init(id);
+        item.Init(id, inventory);
+    }
+    public void PlayerDrop(ItemID id)
+    {
+        CreateItem(id, player.position + player.forward + Vector3.up);
     }
 }

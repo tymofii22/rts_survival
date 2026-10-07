@@ -13,6 +13,7 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private Transform slotParent;
     [SerializeField] private Transform craftParent;
     [SerializeField] private int craftSlotSize = 3;
+    [SerializeField] private ItemFactory factory;
     
 
     private List<UISlot> slots = new List<UISlot>();
@@ -156,6 +157,11 @@ public class UIInventory : MonoBehaviour
     {
         toSlot.AddItem(fromSlot.CurItem);
         fromSlot.RemoveItem();
+        if (IsInCraft(fromSlot) && IsInCraft(toSlot))
+        {
+            toSlot.Subscribe(fromSlot.InvSlot);
+            fromSlot.Subscribe(null);
+        }
     }
 
     private void MoveBetweenItem(UISlot fromSlot, UISlot toSlot)
@@ -167,6 +173,40 @@ public class UIInventory : MonoBehaviour
             fromSlot.SwitchLock(false);
         }
         
+    }
+
+    public bool PickUp(ItemID id)
+    {
+        ItemData data = null;
+        bool success = false;
+
+        for (int i = 0; i < dataList.Items.Count; i++)
+        {
+            if (dataList.Items[i].id == id)
+            {
+                data = dataList.Items[i];
+                success = true;
+                break;
+            }
+        }
+        if (!success)
+        {
+            return success;
+        }
+        for (int i = 0; i < slots.Count; i++)
+        {
+            if (slots[i].IsEmpty)
+            {
+                slots[i].AddItem(data);
+                return success;
+            }
+        }
+        success = false;
+        return success;
+    }
+    public void DropItem(ItemID id)
+    {
+        factory.PlayerDrop(id);
     }
 }
 

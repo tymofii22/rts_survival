@@ -2397,7 +2397,7 @@ Canvas:
   m_OverridePixelPerfect: 0
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
-  m_AdditionalShaderChannelsFlag: 0
+  m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
   m_SortingOrder: 0
@@ -6945,6 +6945,7 @@ MonoBehaviour:
   slotParent: {fileID: 747084137}
   craftParent: {fileID: 50531760}
   craftSlotSize: 3
+  factory: {fileID: 2081994992}
 --- !u!114 &1551896317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7951,10 +7952,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 41a78d241ff66ff4b8f5d4d3abeeddd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventory: {fileID: 0}
-  dataList: {fileID: 0}
+  inventory: {fileID: 1551896316}
+  dataList: {fileID: 11400000, guid: f6d19ab3033920641b22715f70c25377, type: 2}
   startSpawnables:
   - {fileID: 1643060753}
+  player: {fileID: 1818577257}
 --- !u!4 &2081994993
 Transform:
   m_ObjectHideFlags: 0

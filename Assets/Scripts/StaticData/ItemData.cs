@@ -18,6 +18,8 @@ public enum ItemID
 {
     None = 0,
     Backpack = 1,
-    Rope = 2
-
+    Rope = 2,
+    Wood = 3,
+    Stone = 4,
+    Tape = 5
 }
