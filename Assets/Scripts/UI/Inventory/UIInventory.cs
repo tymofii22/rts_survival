@@ -14,6 +14,7 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private Transform craftParent;
     [SerializeField] private int craftSlotSize = 3;
     [SerializeField] private ItemFactory factory;
+    [SerializeField] private UICraft craft;
     
 
     private List<UISlot> slots = new List<UISlot>();
@@ -115,7 +116,7 @@ public class UIInventory : MonoBehaviour
                 UISlot slot = Instantiate(slotPrefab, craftParent);
                 //slot.SetItemData(itemData);
                 craftSlots.Add(slot);
-                slot.Init(this, j, i);
+                slot.Init(this, j, i, craft);
             }
                 
         }

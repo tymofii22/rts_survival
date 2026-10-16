@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f5d3c862543bca4d9c4327b93ecc823, type: 3}
+  m_Name: RecipeDataList
+  m_EditorClassIdentifier: 
+  Recipes:
+  - TopRow: 000000000200000000000000
+    MidRow: 000000000500000000000000
+    BottRow: 000000000200000000000000
+    CraftResult: 1

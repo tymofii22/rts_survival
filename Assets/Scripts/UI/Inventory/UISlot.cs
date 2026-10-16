@@ -17,20 +17,27 @@ public class UISlot : MonoBehaviour
     private Vector2Int slotPos;
     private float doubleClickTime;
     private UISlot invSlot;
+    private UICraft craft;
 
     public bool IsEmpty => isEmpty;
     public bool IsSelected => isSelected;
     public ItemData CurItem => curItem;
     public UISlot InvSlot => invSlot;
 
-    public void Init(UIInventory uIInventory, int x, int y)
+    public void Init(UIInventory uIInventory, int x, int y, UICraft craft = null)
     {
         this.uIInventory = uIInventory;
+        this.craft = craft;
         slotPos = new Vector2Int(x, y);
         buttonDrop.onClick.AddListener(DropItem);
+
     }
     public void AddItem(ItemData data)
     {
+        if (craft != null)
+        {
+            craft.AddItem(data.id, slotPos);
+        }
         itemIcon.sprite = data.Icon;
 
         Color color = itemIcon.color;
@@ -44,6 +51,10 @@ public class UISlot : MonoBehaviour
 
     public void RemoveItem()
     {
+        if (craft != null)
+        {
+            craft.RemoveItem(slotPos);
+        }
         itemIcon.sprite = null;
 
         Color color = itemIcon.color;
