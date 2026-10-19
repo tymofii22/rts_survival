@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 public class UIInventory : MonoBehaviour
 {
@@ -15,6 +16,7 @@ public class UIInventory : MonoBehaviour
     [SerializeField] private int craftSlotSize = 3;
     [SerializeField] private ItemFactory factory;
     [SerializeField] private UICraft craft;
+    [SerializeField] private Image craftPreview;
     
 
     private List<UISlot> slots = new List<UISlot>();
@@ -209,5 +211,8 @@ public class UIInventory : MonoBehaviour
     {
         factory.PlayerDrop(id);
     }
+
+    public void ChangePreview(Sprite newSprite) =>
+        craftPreview.sprite = newSprite;
 }
 
