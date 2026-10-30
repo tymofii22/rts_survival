@@ -36,7 +36,7 @@ public class UISlot : MonoBehaviour
     {
         if (craft != null)
         {
-            craft.AddItem(data.id, slotPos);
+            craft.AddItem(data.id, slotPos, this, invSlot);
         }
         itemIcon.sprite = data.Icon;
 
@@ -53,7 +53,7 @@ public class UISlot : MonoBehaviour
     {
         if (craft != null)
         {
-            craft.RemoveItem(slotPos);
+            craft.RemoveItem(slotPos, this);
         }
         itemIcon.sprite = null;
 
@@ -113,7 +113,7 @@ public class UISlot : MonoBehaviour
         }
     }
 
-    private void RemoveFromCraft()
+    public void RemoveFromCraft()
     {
         RemoveItem();
         invSlot.SwitchLock(true);

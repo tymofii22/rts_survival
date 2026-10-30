@@ -12,7 +12,7 @@ public class PlayerAnimation : MonoBehaviour
         if (curAnimState != animState)
         {
             curAnimState = animState;
-            Debug.Log($"Animation state changed to: {curAnimState}");
+            //Debug.Log($"Animation state changed to: {curAnimState}");
 
             foreach (AnimatorControllerParameter parameter in animator.parameters)
             {

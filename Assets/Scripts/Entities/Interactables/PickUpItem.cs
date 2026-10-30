@@ -6,6 +6,7 @@ public class PickUpItem : MonoBehaviour
 {
     private ItemID itemID;
     private UIInventory inventory;
+    private bool isPickedUp;
 
     public void Init(ItemID itemID, UIInventory inventory)
     {
@@ -18,8 +19,9 @@ public class PickUpItem : MonoBehaviour
     {
         if (collision.gameObject.GetComponent<PlayerMove>())
         {
-            if (inventory.PickUp(itemID))
+            if (inventory.PickUp(itemID) && !isPickedUp)
             {
+                isPickedUp = true;
                 Destroy(gameObject);
             }
         }

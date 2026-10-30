@@ -35,6 +35,10 @@ public class UIInventory : MonoBehaviour
         gameObject.SetActive(false);
         InventoryDebug();
 
+        for (int i = slots.Count-12; i < slots.Count; i++)
+        {
+            slots[i].SwitchLock(false);
+       }
     }
 
    
@@ -158,21 +162,21 @@ public class UIInventory : MonoBehaviour
 
     private void MoveItem(UISlot fromSlot, UISlot toSlot)
     {
-        toSlot.AddItem(fromSlot.CurItem);
-        fromSlot.RemoveItem();
         if (IsInCraft(fromSlot) && IsInCraft(toSlot))
         {
             toSlot.Subscribe(fromSlot.InvSlot);
             fromSlot.Subscribe(null);
         }
+        toSlot.AddItem(fromSlot.CurItem);
+        fromSlot.RemoveItem();
     }
 
     private void MoveBetweenItem(UISlot fromSlot, UISlot toSlot)
     {
         if (IsInCraft(toSlot))
         {
-            toSlot.AddItem(fromSlot.CurItem);
             toSlot.Subscribe(fromSlot);
+            toSlot.AddItem(fromSlot.CurItem);
             fromSlot.SwitchLock(false);
         }
         
@@ -194,12 +198,14 @@ public class UIInventory : MonoBehaviour
         }
         if (!success)
         {
+            Debug.LogError("error " + id);
             return success;
         }
         for (int i = 0; i < slots.Count; i++)
         {
             if (slots[i].IsEmpty)
             {
+                Debug.Log("Item Picked Up " + i);
                 slots[i].AddItem(data);
                 return success;
             }
